@@ -21,8 +21,9 @@
     background-size: 28px 28px, 28px 28px, auto;
     color: var(--ink);
     font-family: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    padding: 20px 14px 40px;
+    padding: 20px 12px 40px;
     display: flex; flex-direction: column; align-items: center;
+    overflow-x: hidden;
   }
   .frame {
     width: 100%; max-width: 980px; background: var(--paper);
@@ -33,28 +34,35 @@
   .plankopf { display: grid; grid-template-columns: 1fr auto; border-bottom: 2px solid var(--ink); }
   @media (max-width: 560px) { .plankopf { grid-template-columns: 1fr; } .plankopf-main { border-right: none !important; border-bottom: 1px solid var(--ink); } }
   .plankopf-main { padding: 18px 20px 14px; border-right: 1px solid var(--ink); }
-  .eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--graphite); font-weight: 600; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #6E6E68; font-weight: 600; }
   h1 { font-size: clamp(21px, 4.2vw, 38px); font-weight: 800; font-stretch: 75%; text-transform: uppercase; line-height: 1.05; margin-top: 4px; }
   h1 .red { color: var(--red); }
   .plankopf-meta { display: grid; grid-template-rows: repeat(5, 1fr); min-width: 210px; }
-  .meta-row { display: flex; justify-content: space-between; gap: 14px; align-items: center; padding: 4px 14px; border-bottom: 1px solid var(--gridline); font-size: 11px; }
+  .meta-row { display: flex; justify-content: space-between; gap: 14px; align-items: center; padding: 5px 14px; border-bottom: 1px solid var(--gridline); font-size: 12.5px; }
   .meta-row:last-child { border-bottom: none; }
-  .meta-row .k { color: var(--graphite); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; font-size: 9.5px; }
+  .meta-row .k { color: #6E6E68; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; font-size: 10.5px; }
   .meta-row .v { font-weight: 600; white-space: nowrap; }
   .meta-row .v.hand { font-family: 'Caveat', cursive; font-size: 16px; font-weight: 600; }
 
   /* ——— Intro / join ——— */
-  .join { padding: 34px 24px 44px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+  .join { padding: 26px 16px 40px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+  .vorwort { width: 100%; max-width: 560px; }
+  .vorwort summary {
+    list-style: none; cursor: pointer; text-align: center;
+    font-size: 12.5px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 800;
+    border: 1.5px solid var(--ink); padding: 11px 12px; user-select: none;
+  }
+  .vorwort summary::-webkit-details-marker { display: none; }
+  .vorwort[open] summary { background: var(--ink); color: var(--paper); }
   .homage {
-    max-width: 560px; font-size: 14px; line-height: 1.65; color: var(--ink);
-    font-style: italic; border-top: 1.5px solid var(--ink); border-bottom: 1.5px solid var(--ink);
-    padding: 14px 8px;
+    font-size: 15px; line-height: 1.7; color: var(--ink); font-style: italic;
+    border: 1.5px solid var(--ink); border-top: none; padding: 14px 16px;
   }
   .homage b { font-style: normal; }
   .mascot-wrap { display: flex; align-items: flex-end; gap: 0; }
-  .mascot { width: clamp(130px, 30vw, 180px); height: auto; }
+  .mascot { width: clamp(140px, 34vw, 190px); height: auto; }
   .bubble {
-    position: relative; font-family: 'Caveat', cursive; font-size: 21px; font-weight: 700;
+    position: relative; font-family: 'Caveat', cursive; font-size: 23px; font-weight: 700;
     color: var(--ink); background: #fff; border: 2.5px solid var(--ink); border-radius: 14px;
     padding: 10px 16px; max-width: 320px; margin-bottom: 46px; text-align: left; line-height: 1.15;
   }
@@ -62,9 +70,18 @@
     content: ""; position: absolute; left: -14px; bottom: 8px;
     border: 10px solid transparent; border-right-color: var(--ink); border-left: 0;
   }
-  .join p.small { font-size: 12.5px; color: var(--graphite); max-width: 460px; line-height: 1.55; }
-  .join-row { display: flex; gap: 8px; width: 100%; max-width: 380px; }
-  .join-row input { flex: 1; font-family: inherit; font-size: 15px; padding: 11px 12px; border: 1.5px solid var(--ink); background: var(--paper); }
+  @media (max-width: 470px) {
+    .mascot-wrap { flex-direction: column-reverse; align-items: center; }
+    .bubble { margin-bottom: 16px; }
+    .bubble::after {
+      left: 30px; bottom: -20px;
+      border-left: 10px solid transparent; border-right: 10px solid transparent;
+      border-top: 12px solid var(--ink); border-bottom: 0;
+    }
+  }
+  .join p.small { font-size: 14px; color: #6E6E68; max-width: 460px; line-height: 1.6; }
+  .join-row { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; max-width: 380px; justify-content: center; }
+  .join-row input { flex: 1 1 170px; min-width: 0; font-family: inherit; font-size: 16px; padding: 12px; border: 1.5px solid var(--ink); background: var(--paper); }
   .join-row input:focus-visible, button:focus-visible { outline: 2px solid var(--red); outline-offset: -1px; }
   .btn-red { font-family: inherit; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; font-size: 12px; padding: 11px 18px; background: var(--red); color: var(--paper); border: none; cursor: pointer; }
   .btn-red:disabled { opacity: 0.5; }
@@ -75,47 +92,48 @@
   .tabs button {
     flex: 1; background: transparent; border: none; border-right: 1px solid var(--ink);
     font-family: inherit; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em;
-    font-size: 11px; padding: 12px 6px; cursor: pointer; color: var(--graphite);
+    font-size: 12.5px; padding: 13px 6px; cursor: pointer; color: #6E6E68;
   }
   .tabs button:last-child { border-right: none; }
   .tabs button.active { background: var(--ink); color: var(--paper); }
 
   /* ——— Bingo ——— */
-  .body-grid { display: none; grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr); }
+  .body-grid { display: none; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
   .body-grid.on { display: grid; }
   @media (max-width: 760px) {
-    .body-grid.on { grid-template-columns: 1fr; }
+    .body-grid.on { grid-template-columns: minmax(0, 1fr); }
     .margin-notes { border-left: none !important; border-top: 2px solid var(--ink); }
   }
-  .card-wrap { padding: 16px; }
-  .bingo { display: grid; grid-template-columns: repeat(5, 1fr); border: 1.5px solid var(--ink); }
+  .card-wrap { padding: 14px; min-width: 0; }
+  .bingo { display: grid; width: 100%; grid-template-columns: repeat(5, minmax(0, 1fr)); border: 1.5px solid var(--ink); }
   .cell {
-    position: relative; aspect-ratio: 1/1; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
-    background: transparent; font-family: inherit; font-size: clamp(8px, 1.35vw, 12px); line-height: 1.25;
-    font-weight: 600; color: var(--ink); padding: 6px 5px; text-align: center;
+    position: relative; aspect-ratio: 1/1.1; min-width: 0; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+    background: transparent; font-family: inherit; font-size: clamp(10px, 1.6vw, 13.5px); line-height: 1.3;
+    font-weight: 600; color: var(--ink); padding: 5px 4px; text-align: center;
+    overflow-wrap: anywhere; hyphens: auto;
     display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.15s;
   }
-  @media (max-width: 760px) { .cell { font-size: 8.5px; padding: 4px 3px; } }
+  @media (max-width: 760px) { .cell { font-size: 10px; padding: 4px 2px; aspect-ratio: 1/1.25; } }
   .cell:nth-child(5n) { border-right: none; }
   .cell:nth-last-child(-n+5) { border-bottom: none; }
   .cell:hover { background: #F1EFE8; }
   .cell:focus-visible { outline: 2px solid var(--red); outline-offset: -2px; }
-  .cell.center { background: var(--ink); color: var(--paper); font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; cursor: default; font-size: clamp(7.5px, 1.2vw, 11px); }
+  .cell.center { background: var(--ink); color: var(--paper); font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; cursor: default; font-size: clamp(9px, 1.4vw, 12px); }
   .cell svg.mark { position: absolute; inset: 6%; pointer-events: none; }
   .cell.done:not(.center) { background: var(--red-soft); }
-  .bingo-count { margin-top: 12px; display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--graphite); text-transform: uppercase; letter-spacing: 0.14em; font-weight: 600; flex-wrap: wrap; }
+  .bingo-count { margin-top: 12px; display: flex; align-items: center; gap: 12px; font-size: 13px; color: #6E6E68; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; flex-wrap: wrap; }
   .stamp { font-family: 'Caveat', cursive; font-size: 26px; color: var(--red); font-weight: 700; transform: rotate(-4deg); border: 2px solid var(--red); padding: 0 10px; border-radius: 3px; }
-  .reset { background: none; border: none; font-family: inherit; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--graphite); text-decoration: underline; cursor: pointer; margin-left: auto; }
+  .reset { background: none; border: none; font-family: inherit; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #6E6E68; text-decoration: underline; cursor: pointer; margin-left: auto; padding: 8px 4px; }
 
   /* ——— Randnotizen ——— */
   .margin-notes { border-left: 2px solid var(--ink); display: flex; flex-direction: column; min-height: 0; }
-  .notes-head { padding: 12px 16px 10px; border-bottom: 1px solid var(--ink); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; display: flex; justify-content: space-between; align-items: baseline; }
-  .notes-head span:last-child { color: var(--graphite); font-weight: 600; letter-spacing: 0.1em; font-size: 9.5px; }
-  .notes-scroll { padding: 14px 16px; overflow-y: auto; max-height: 430px; display: flex; flex-direction: column; gap: 16px; }
-  @media (max-width: 760px) { .notes-scroll { max-height: 280px; } }
-  .note .ref { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--graphite); font-weight: 700; margin-bottom: 2px; }
-  .note .txt { font-family: 'Caveat', cursive; font-size: 20px; line-height: 1.25; color: var(--red); font-weight: 600; }
-  .note.bingo .txt { font-size: 23px; text-decoration: underline; }
+  .notes-head { padding: 12px 16px 10px; border-bottom: 1px solid var(--ink); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700; display: flex; flex-wrap: wrap; gap: 6px; justify-content: space-between; align-items: baseline; }
+  .notes-head span:last-child { color: #6E6E68; font-weight: 600; letter-spacing: 0.1em; font-size: 10.5px; }
+  .notes-scroll { padding: 14px 16px 18px; overflow-y: auto; max-height: 430px; display: flex; flex-direction: column; gap: 16px; }
+  @media (max-width: 760px) { .notes-scroll { max-height: 320px; } }
+  .note .ref { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.14em; color: #6E6E68; font-weight: 700; margin-bottom: 2px; }
+  .note .txt { font-family: 'Caveat', cursive; font-size: 22px; line-height: 1.25; color: var(--red); font-weight: 600; }
+  .note.bingo .txt { font-size: 25px; text-decoration: underline; }
 
   /* ——— Sprechstunde ——— */
   .sprech { display: none; padding: 26px 20px 34px; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
@@ -138,7 +156,7 @@
     70%  { transform: scale(1) rotate(var(--rot, -6deg)); opacity: 1; }
     100% { transform: scale(1) rotate(var(--rot, -6deg)) translateY(-14px); opacity: 0; }
   }
-  .hint { font-size: 11px; color: var(--graphite); text-align: center; margin-top: 14px; letter-spacing: 0.06em; max-width: 620px; line-height: 1.6; }
+  .hint { font-size: 12.5px; color: #6E6E68; text-align: center; margin-top: 14px; letter-spacing: 0.05em; max-width: 620px; line-height: 1.6; }
   @media (prefers-reduced-motion: reduce) { .burst { animation: none; opacity: 0; } * { transition: none !important; } }
 </style>
 </head>
@@ -161,11 +179,14 @@
 
   <!-- Intro -->
   <div class="join" id="joinScreen">
-    <div class="homage">
-      Wir schreiben das Jahr 2026 nach Christus. Ganz Wien rendert. <b>Ganz Wien? Nein!</b>
-      Ein von einem unbeugsamen Architekten geführtes Büro hört nicht auf, dem glänzenden
-      Blendwerk Widerstand zu leisten — mit Bleistift, Rotstift und tadelloser Handschrift.
-    </div>
+    <details class="vorwort">
+      <summary>Vorwort lesen</summary>
+      <div class="homage">
+        Wir schreiben das Jahr 2026 nach Christus. Ganz Wien rendert. <b>Ganz Wien? Nein!</b>
+        Ein von einem unbeugsamen Architekten geführtes Büro hört nicht auf, dem glänzenden
+        Blendwerk Widerstand zu leisten — mit Bleistift, Rotstift und tadelloser Handschrift.
+      </div>
+    </details>
     <div class="mascot-wrap">
       <div id="mascotJoin"></div>
       <div class="bubble">Servas. Pospischil, Baumeister in Pension. Wer bist du, und was machst du auf meiner Baustelle?</div>
@@ -355,38 +376,50 @@ const BURST_WORDS = ["ZACK!", "PENG!", "KRRK!", "SO!", "HOPPLA!"];
 
 // ——— Mascot: Original-Comicfigur, Feder von der KI, Seele vom Bau ———
 const MASCOT_SVG = `
-<svg class="mascot" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Baumeister Pospischil">
-  <g stroke="#1B1B1A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Plan roll under arm -->
+<svg class="mascot" viewBox="0 0 224 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Baumeister Pospischil">
+  <g stroke="#1B1B1A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- tiny legs, big shoes -->
+    <line x1="92" y1="220" x2="90" y2="238" stroke-width="9"/>
+    <line x1="128" y1="220" x2="130" y2="238" stroke-width="9"/>
+    <path d="M64 246 C64 238 78 234 90 238 C96 240 96 248 88 249 Z" fill="#1B1B1A"/>
+    <path d="M156 246 C156 238 142 234 130 238 C124 240 124 248 132 249 Z" fill="#1B1B1A"/>
+    <!-- pear body -->
+    <path d="M74 226 C56 186 66 152 110 148 C154 152 164 186 146 226 Z" fill="#1B1B1A"/>
+    <!-- plan roll clamped under the left arm -->
     <g>
-      <rect x="18" y="150" width="86" height="26" rx="13" fill="#FAFAF6"/>
-      <line x1="34" y1="150" x2="34" y2="176"/>
-      <rect x="52" y="148" width="12" height="30" rx="3" fill="#C0362C" stroke="none"/>
-      <ellipse cx="104" cy="163" rx="7" ry="13" fill="#E7E5DD"/>
+      <rect x="10" y="168" width="92" height="26" rx="13" fill="#FAFAF6"/>
+      <line x1="28" y1="168" x2="28" y2="194"/>
+      <rect x="48" y="166" width="12" height="30" rx="3" fill="#C0362C" stroke="none"/>
+      <ellipse cx="102" cy="181" rx="7" ry="13" fill="#E7E5DD"/>
     </g>
-    <!-- Body -->
-    <path d="M60 230 C56 178 66 156 100 154 C134 156 144 178 140 230 Z" fill="#1B1B1A"/>
-    <!-- Arm raised with pencil -->
-    <path d="M132 168 C150 156 160 138 162 118" fill="none"/>
-    <circle cx="163" cy="112" r="9" fill="#F0C9A0"/>
-    <line x1="168" y1="104" x2="184" y2="78" stroke="#C0362C" stroke-width="6"/>
-    <!-- Head -->
-    <ellipse cx="100" cy="96" rx="46" ry="44" fill="#F0C9A0"/>
-    <!-- Ears -->
-    <ellipse cx="55" cy="100" rx="8" ry="12" fill="#F0C9A0"/>
-    <ellipse cx="145" cy="100" rx="8" ry="12" fill="#F0C9A0"/>
-    <!-- Big comic nose -->
-    <ellipse cx="100" cy="110" rx="17" ry="14" fill="#EBB98B"/>
-    <!-- Eyes + mighty brows -->
-    <circle cx="82" cy="88" r="4" fill="#1B1B1A" stroke="none"/>
-    <circle cx="118" cy="88" r="4" fill="#1B1B1A" stroke="none"/>
-    <path d="M68 78 C76 72 88 72 94 77" fill="none" stroke-width="6"/>
-    <path d="M106 77 C112 72 124 72 132 78" fill="none" stroke-width="6"/>
-    <!-- Walrus mustache -->
-    <path d="M72 118 C78 132 92 136 100 128 C108 136 122 132 128 118 C122 126 110 124 100 119 C90 124 78 126 72 118 Z" fill="#E7E5DD"/>
-    <!-- Flat cap -->
-    <path d="M52 76 C56 48 144 48 148 76 C132 66 68 66 52 76 Z" fill="#1B1B1A"/>
-    <path d="M46 78 C80 68 120 68 154 78 L150 86 C118 78 82 78 50 86 Z" fill="#1B1B1A"/>
+    <path d="M70 168 C58 176 52 188 54 198" fill="none" stroke-width="8"/>
+    <!-- right arm raised, red pencil, motion lines -->
+    <path d="M142 166 C162 152 172 134 176 116" fill="none" stroke-width="9"/>
+    <circle cx="178" cy="110" r="11" fill="#F2C79A"/>
+    <line x1="185" y1="101" x2="202" y2="74" stroke="#C0362C" stroke-width="7"/>
+    <path d="M202 74 L209 62 L205 75 Z" fill="#1B1B1A" stroke-width="2"/>
+    <path d="M188 54 C194 50 200 48 206 48 M198 64 C203 60 208 58 213 58" stroke-width="3" fill="none"/>
+    <!-- head -->
+    <ellipse cx="110" cy="94" rx="54" ry="52" fill="#F2C79A"/>
+    <ellipse cx="55" cy="102" rx="9" ry="13" fill="#F2C79A"/>
+    <ellipse cx="165" cy="102" rx="9" ry="13" fill="#F2C79A"/>
+    <!-- cheeks -->
+    <circle cx="66" cy="110" r="8" fill="#E8A088" stroke="none" opacity="0.55"/>
+    <circle cx="154" cy="110" r="8" fill="#E8A088" stroke="none" opacity="0.55"/>
+    <!-- eyes close together, mighty brows -->
+    <circle cx="94" cy="84" r="4.5" fill="#1B1B1A" stroke="none"/>
+    <circle cx="126" cy="84" r="4.5" fill="#1B1B1A" stroke="none"/>
+    <path d="M78 74 C86 66 98 66 104 72" fill="none" stroke-width="8"/>
+    <path d="M116 72 C122 66 134 66 142 74" fill="none" stroke-width="8"/>
+    <!-- big bulbous nose with shine -->
+    <circle cx="110" cy="106" r="21" fill="#EFB27E"/>
+    <ellipse cx="103" cy="99" rx="6" ry="4" fill="#F8D9B4" stroke="none"/>
+    <!-- mighty drooping mustache -->
+    <path d="M62 114 C58 148 90 162 110 140 C130 162 162 148 158 114 C150 136 128 136 110 122 C92 136 70 136 62 114 Z" fill="#ECEAE1"/>
+    <!-- flat cap with button -->
+    <path d="M54 72 C60 38 160 38 166 72 C148 60 72 60 54 72 Z" fill="#1B1B1A"/>
+    <path d="M46 76 C82 64 138 64 174 76 L169 86 C136 76 84 76 51 86 Z" fill="#1B1B1A"/>
+    <circle cx="110" cy="46" r="4" fill="#1B1B1A"/>
   </g>
 </svg>`;
 
