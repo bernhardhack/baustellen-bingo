@@ -158,6 +158,15 @@
     100% { transform: scale(1) rotate(var(--rot, -6deg)) translateY(-14px); opacity: 0; }
   }
   .hint { font-size: 12.5px; color: #6E6E68; text-align: center; margin-top: 14px; letter-spacing: 0.05em; max-width: 620px; line-height: 1.6; }
+
+  /* ——— Detail-Ansicht ——— */
+  .overlay { position: fixed; inset: 0; background: rgba(27,27,26,0.45); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 50; }
+  .overlay[hidden] { display: none; }
+  .detail { width: 100%; max-width: 420px; background: var(--paper); border: 2px solid var(--ink); box-shadow: 6px 6px 0 rgba(27,27,26,0.35); padding: 24px 20px; text-align: center; display: flex; flex-direction: column; gap: 14px; }
+  .detail-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #6E6E68; font-weight: 700; }
+  .detail-text { font-size: clamp(21px, 5.5vw, 27px); font-weight: 800; line-height: 1.3; }
+  .detail-state { font-family: 'Caveat', cursive; font-size: 22px; color: var(--red); font-weight: 600; line-height: 1.2; }
+  .detail-actions { display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 4px; }
   @media (prefers-reduced-motion: reduce) { .burst { animation: none; opacity: 0; } * { transition: none !important; } }
 </style>
 </head>
@@ -226,7 +235,6 @@
         <span id="countLabel">Angekreuzt: 1 / 25</span>
         <span class="stamp" id="stampLabel" style="display:none"></span>
         <button class="reset" id="shuffleBtn">Neu mischen</button>
-        <button class="reset" id="resetBtn">Zurücksetzen</button>
       </div>
     </div>
     <aside class="margin-notes">
@@ -243,6 +251,18 @@
     </div>
     <button class="btn-red" id="weisheitBtn">No, sag was, Baumeister</button>
     <p class="small">Baumeister Pospischil, Jahrgang 1941. Verfügt über sechzig Jahre Bauerfahrung und zu jedem Thema eine Meinung. Über Renderings redet er net.</p>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="detail" role="dialog" aria-modal="true" aria-labelledby="detailText">
+    <div class="detail-eyebrow">Baustellen-Ereignis</div>
+    <div class="detail-text" id="detailText"></div>
+    <div class="detail-state" id="detailState"></div>
+    <div class="detail-actions">
+      <button class="btn-red" id="detailMark">Ankreuzen</button>
+      <button class="reset" id="detailClose">Schließen</button>
+    </div>
   </div>
 </div>
 
@@ -294,6 +314,18 @@ const SQUARES_POOL = [
   "Der Prüfstatiker will Nachweise",
   "Baustellenbesichtigung im Anzug",
   "Ausschreibung: drei Angebote, drei Welten",
+  "Büroparty: „nur ein kurzer Umtrunk“",
+  "„A klans Kopfweh“ nach der Büroparty",
+  "Der Beamer findet das HDMI nicht",
+  "Doodle mit 14 Terminoptionen",
+  "„Kurze Frage“ dauert 40 Minuten",
+  "Norm hat sich geändert — schon wieder",
+  "Kran steht still: zu viel Wind",
+  "Plotter druckt spiegelverkehrt",
+  "Alle reden von KI, keiner weiß wozu",
+  "Der Kaffee ist aus — Krisensitzung",
+  "Baustellen-Selfie für LinkedIn",
+  "Türliste widerspricht dem Plan",
 ];
 const CENTER_TEXT = "MICHAEL GEWINNT BEIM WUZZELN";
 const CENTER = 12;
@@ -408,6 +440,42 @@ const COMMENTS = {
   "Ausschreibung: drei Angebote, drei Welten": [
     "Drei Angebote: ans zu teuer, ans zu billig, ans von an Neffen.",
     "Wenn drei Angebote gleich san, is was faul. Wenn's verschieden san, a."],
+  "Büroparty: „nur ein kurzer Umtrunk“": [
+    "„Nur a Umtrunk“ — so fangen die Legenden an, von denen ma am Montag nix mehr wissen will.",
+    "A kurzer Umtrunk in dem Büro dauert erfahrungsgemäß, bis der Wuzzler quietscht."],
+  "„A klans Kopfweh“ nach der Büroparty": [
+    "„A klans Kopfweh“ — die offizielle Diagnose. Inoffiziell: Der Umtrunk war gründlich.",
+    "Kopfweh am Tag danach is ka Krankheit. Des is a Baustellenprotokoll."],
+  "Der Beamer findet das HDMI nicht": [
+    "Zehn Akademiker, a Beamer, ka Bild. Der Fortschritt is a Zauberer.",
+    "Früher: Plan aufhängen, fertig. Heut: zwanzig Minuten Kabelandacht."],
+  "Doodle mit 14 Terminoptionen": [
+    "Vierzehn Optionen, und am End passt eh kane. Demokratie in Reinform.",
+    "A Doodle mit vierzehn Terminen is ka Umfrage. Des is a Hilferuf."],
+  "„Kurze Frage“ dauert 40 Minuten": [
+    "„Kurze Frage“ — die längsten zwa Wörter der deutschen Sprache. Gleich nach „nur a Kleinigkeit“.",
+    "Vierzig Minuten für a kurze Frage. Die Antwort war übrigens: „Jein.“"],
+  "Norm hat sich geändert — schon wieder": [
+    "Die Norm ändert sich schneller als i mei Unterschrift. Und die is seit '65 gleich.",
+    "Wieder a neue Norm. Der Aktenordner freut sich, der Hausverstand weniger."],
+  "Kran steht still: zu viel Wind": [
+    "Der Wind is der anzige am Bau, der pünktlich kummt.",
+    "Kran steht, alle schauen in Himmel. Des is Baustellenmeditation."],
+  "Plotter druckt spiegelverkehrt": [
+    "Spiegelverkehrt is der Plan a schön. Nur baun sollt ma ihn so net.",
+    "Der Plotter hat an eigenen Willen. Respekt davor — aber Papier kost' Geld."],
+  "Alle reden von KI, keiner weiß wozu": [
+    "Alle reden von der KI. I sag: solang's kane Fugen verputzen kann, bleib i ruhig.",
+    "Die KI zeichnet in Sekunden, was kaner braucht. Tempo is net alles."],
+  "Der Kaffee ist aus — Krisensitzung": [
+    "Ka Kaffee im Büro — jetzt is der Notfall amtlich. Alles andere war Vorgeplänkel.",
+    "A Büro ohne Kaffee arbeitet auf eigene Gefahr."],
+  "Baustellen-Selfie für LinkedIn": [
+    "Helm auf, Lächeln, Foto — und die Baustelle hat wieder nix davon.",
+    "Zu meiner Zeit hat ma am Bau gschwitzt statt posiert. Aber bittschön, fesch seids ja."],
+  "Türliste widerspricht dem Plan": [
+    "Die Türliste sagt links, der Plan sagt rechts, und die Tür is eh no net geliefert.",
+    "Wenn Türliste und Plan streiten, gwinnt am End der Bestand."],
 };
 const FALLBACK = ["Aha. No freilich.", "Hab i's net gsagt?", "Des schreib i mir auf. Mit Rotstift."];
 
@@ -574,7 +642,8 @@ function renderGrid() {
     b.setAttribute("aria-label", s);
     b.textContent = s;
     if (marked.has(i)) b.insertAdjacentHTML("beforeend", i === CENTER ? MARK_SVG_WHITE : MARK_SVG);
-    b.addEventListener("click", (e) => toggleSquare(i, e));
+    b.addEventListener("click", () => openDetail(i));
+    b.style.cursor = "pointer";
     grid.appendChild(b);
   });
   $("countLabel").textContent = `Angekreuzt: ${marked.size} / 25`;
@@ -588,7 +657,12 @@ function save() {
   store.set("bb63_last", player);
 }
 
-function toggleSquare(i, e) {
+function cellRect(i) {
+  const el = $("bingoGrid").children[i];
+  return el ? el.getBoundingClientRect() : null;
+}
+
+function applyToggle(i) {
   if (i === CENTER) return;
   if (marked.has(i)) {
     marked.delete(i);
@@ -602,7 +676,7 @@ function toggleSquare(i, e) {
   bingos = newCount;
   save(); renderGrid();
 
-  const rect = e.currentTarget?.getBoundingClientRect?.();
+  const rect = cellRect(i);
   const cx = rect ? rect.left + rect.width / 2 : innerWidth / 2;
   const cy = rect ? rect.top : innerHeight / 2;
   if (isNewBingo) {
@@ -614,6 +688,28 @@ function toggleSquare(i, e) {
     addNote(card[i], pick(COMMENTS[card[i]] || FALLBACK), false);
   }
 }
+
+let detailIndex = null;
+function openDetail(i) {
+  detailIndex = i;
+  const isC = i === CENTER;
+  const isM = marked.has(i);
+  $("detailText").textContent = card[i];
+  $("detailState").textContent = isC
+    ? "Des Feld is fix angekreuzt. Naturgesetz — da hilft ka Radiergummi."
+    : (isM ? "Bereits angekreuzt." : "Grad wirklich passiert? Dann her mit dem Rotstift.");
+  $("detailMark").style.display = isC ? "none" : "";
+  $("detailMark").textContent = isM ? "Kreuzerl entfernen" : "Ankreuzen";
+  $("overlay").hidden = false;
+}
+$("detailMark").addEventListener("click", () => {
+  const i = detailIndex;
+  $("overlay").hidden = true;
+  applyToggle(i);
+});
+$("detailClose").addEventListener("click", () => { $("overlay").hidden = true; });
+$("overlay").addEventListener("click", (e) => { if (e.target === $("overlay")) $("overlay").hidden = true; });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $("overlay").hidden = true; });
 
 function join(name) {
   player = name;
@@ -645,13 +741,6 @@ $("joinBtn").addEventListener("click", () => {
   if (n) join(n);
 });
 $("nameInput").addEventListener("keydown", (e) => { if (e.key === "Enter") $("joinBtn").click(); });
-
-$("resetBtn").addEventListener("click", () => {
-  if (!confirm("Kreuzerl auf dieser Karte löschen? Der Pospischil radiert nur ungern.")) return;
-  marked = new Set([CENTER]); bingos = 0;
-  save(); renderGrid();
-  addNote("Plankopf", "Alles ausradiert. A sauberes Blatt — des mag i.", false);
-});
 
 $("shuffleBtn").addEventListener("click", () => {
   if (!confirm("Neue Karte mischen? Deine Kreuzerl auf dieser Karte verfallen.")) return;
