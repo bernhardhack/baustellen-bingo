@@ -20,7 +20,12 @@
 <meta name="twitter:image" content="https://bernhardhack.github.io/baustellen-bingo/og.png">
 <meta name="theme-color" content="#FAFAF6">
 <link rel="icon" href="favicon-64.png" sizes="64x64">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Baustellen-Bingo">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Caveat:wght@400..700&family=Patrick+Hand&display=swap" rel="stylesheet">
@@ -77,22 +82,16 @@
     border: 1.5px solid var(--ink); border-top: none; padding: 14px 16px;
   }
   .homage b { font-style: normal; }
-  .mascot-wrap { display: flex; align-items: flex-end; gap: 0; }
+  .mascot-wrap { display: flex; flex-direction: column-reverse; align-items: center; gap: 0; }
   .mascot { width: clamp(140px, 34vw, 190px); height: auto; }
   .bubble {
     position: relative; font-family: 'Patrick Hand', 'Comic Sans MS', cursive; font-size: 19px; font-weight: 400;
     color: var(--ink); background: #fff; border: 3px solid var(--ink); border-radius: 24px;
-    padding: 13px 18px; max-width: 330px; margin-bottom: 68px; text-align: left; line-height: 1.35;
+    padding: 13px 18px; max-width: 330px; margin-bottom: 30px; text-align: left; line-height: 1.35;
   }
   .bubble::after {
-    content: ""; position: absolute; left: -33px; top: 18px; width: 44px; height: 36px;
-    transform: scaleY(-1);
-    background: url('data:image/svg+xml;utf8,<svg%20xmlns="http://www.w3.org/2000/svg"%20viewBox="0%200%2044%2036"><path%20d="M42%204%20C22%2010%2010%2020%202%2034%20C12%2024%2026%2020%2042%2022%20Z"%20fill="white"/><path%20d="M42%204%20C22%2010%2010%2020%202%2034%20C12%2024%2026%2020%2042%2022"%20fill="none"%20stroke="%231B1B1A"%20stroke-width="3"%20stroke-linecap="round"/></svg>') no-repeat center / contain;
-  }
-  @media (max-width: 470px) {
-    .mascot-wrap { flex-direction: column-reverse; align-items: center; }
-    .bubble { margin-bottom: 26px; }
-    .bubble::after { left: 46px; top: auto; bottom: -31px; transform: rotate(75deg); }
+    content: ""; position: absolute; left: calc(50% - 21px); bottom: -33px; width: 42px; height: 36px;
+    background: url('data:image/svg+xml;utf8,<svg%20xmlns="http://www.w3.org/2000/svg"%20viewBox="0%200%2042%2036"><path%20d="M7%200%20C9%2014%2013%2026%2016%2035%20C18%2021%2025%208%2037%200%20Z"%20fill="white"/><path%20d="M7%200%20C9%2014%2013%2026%2016%2035"%20fill="none"%20stroke="%231B1B1A"%20stroke-width="3"%20stroke-linecap="round"/><path%20d="M16%2035%20C18%2021%2025%208%2037%200"%20fill="none"%20stroke="%231B1B1A"%20stroke-width="3"%20stroke-linecap="round"/></svg>') no-repeat center / contain;
   }
   .join p.small { font-size: 14px; color: #6E6E68; max-width: 460px; line-height: 1.6; }
   .join-row { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; max-width: 380px; justify-content: center; }
@@ -157,7 +156,7 @@
   .sprech { display: none; padding: 26px 20px 34px; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
   .sprech.on { display: flex; }
   .sprech .mascot { width: clamp(120px, 26vw, 160px); }
-  .sprech .bubble { margin-bottom: 40px; min-height: 54px; display: flex; align-items: center; }
+  .sprech .bubble { margin-bottom: 30px; min-height: 54px; display: flex; align-items: center; }
 
   /* ——— Comic bursts ——— */
   .burst {
