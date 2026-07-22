@@ -502,54 +502,8 @@ const WEISHEITEN = [
 
 const BURST_WORDS = ["ZACK!", "PENG!", "KRRK!", "SO!", "HOPPLA!"];
 
-// ——— Mascot: Original-Comicfigur, Feder von der KI, Seele vom Bau ———
-const MASCOT_SVG = `
-<svg class="mascot" viewBox="0 0 224 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Baumeister Pospischil">
-  <g stroke="#1B1B1A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-    <!-- tiny legs, big shoes -->
-    <line x1="92" y1="220" x2="90" y2="238" stroke-width="9"/>
-    <line x1="128" y1="220" x2="130" y2="238" stroke-width="9"/>
-    <path d="M64 246 C64 238 78 234 90 238 C96 240 96 248 88 249 Z" fill="#1B1B1A"/>
-    <path d="M156 246 C156 238 142 234 130 238 C124 240 124 248 132 249 Z" fill="#1B1B1A"/>
-    <!-- pear body -->
-    <path d="M74 226 C56 186 66 152 110 148 C154 152 164 186 146 226 Z" fill="#1B1B1A"/>
-    <!-- plan roll clamped under the left arm -->
-    <g>
-      <rect x="10" y="168" width="92" height="26" rx="13" fill="#FAFAF6"/>
-      <line x1="28" y1="168" x2="28" y2="194"/>
-      <rect x="48" y="166" width="12" height="30" rx="3" fill="#C0362C" stroke="none"/>
-      <ellipse cx="102" cy="181" rx="7" ry="13" fill="#E7E5DD"/>
-    </g>
-    <path d="M70 168 C58 176 52 188 54 198" fill="none" stroke-width="8"/>
-    <!-- right arm raised, red pencil, motion lines -->
-    <path d="M142 166 C162 152 172 134 176 116" fill="none" stroke-width="9"/>
-    <circle cx="178" cy="110" r="11" fill="#F2C79A"/>
-    <line x1="185" y1="101" x2="202" y2="74" stroke="#C0362C" stroke-width="7"/>
-    <path d="M202 74 L209 62 L205 75 Z" fill="#1B1B1A" stroke-width="2"/>
-    <path d="M188 54 C194 50 200 48 206 48 M198 64 C203 60 208 58 213 58" stroke-width="3" fill="none"/>
-    <!-- head -->
-    <ellipse cx="110" cy="94" rx="54" ry="52" fill="#F2C79A"/>
-    <ellipse cx="55" cy="102" rx="9" ry="13" fill="#F2C79A"/>
-    <ellipse cx="165" cy="102" rx="9" ry="13" fill="#F2C79A"/>
-    <!-- cheeks -->
-    <circle cx="66" cy="110" r="8" fill="#E8A088" stroke="none" opacity="0.55"/>
-    <circle cx="154" cy="110" r="8" fill="#E8A088" stroke="none" opacity="0.55"/>
-    <!-- eyes close together, mighty brows -->
-    <circle cx="94" cy="84" r="4.5" fill="#1B1B1A" stroke="none"/>
-    <circle cx="126" cy="84" r="4.5" fill="#1B1B1A" stroke="none"/>
-    <path d="M78 74 C86 66 98 66 104 72" fill="none" stroke-width="8"/>
-    <path d="M116 72 C122 66 134 66 142 74" fill="none" stroke-width="8"/>
-    <!-- big bulbous nose with shine -->
-    <circle cx="110" cy="106" r="21" fill="#EFB27E"/>
-    <ellipse cx="103" cy="99" rx="6" ry="4" fill="#F8D9B4" stroke="none"/>
-    <!-- mighty drooping mustache -->
-    <path d="M62 114 C58 148 90 162 110 140 C130 162 162 148 158 114 C150 136 128 136 110 122 C92 136 70 136 62 114 Z" fill="#ECEAE1"/>
-    <!-- flat cap with button -->
-    <path d="M54 72 C60 38 160 38 166 72 C148 60 72 60 54 72 Z" fill="#1B1B1A"/>
-    <path d="M46 76 C82 64 138 64 174 76 L169 86 C136 76 84 76 51 86 Z" fill="#1B1B1A"/>
-    <circle cx="110" cy="46" r="4" fill="#1B1B1A"/>
-  </g>
-</svg>`;
+// ——— Mascot: Comic-Pospischil, Hintergrund handisch wegstemmt ———
+const MASCOT_IMG = '<img class="mascot" src="pospischil.png" alt="Baumeister Pospischil" width="380" height="456">';
 
 // ——— Utilities ———
 const store = {
@@ -599,8 +553,8 @@ let player = null, card = [], marked = new Set([CENTER]), bingos = 0, round = 1;
 // ——— DOM ———
 const $ = (id) => document.getElementById(id);
 $("metaDate").textContent = new Date().toLocaleDateString("de-AT", { day: "2-digit", month: "2-digit", year: "numeric" });
-$("mascotJoin").innerHTML = MASCOT_SVG;
-$("mascotSprech").innerHTML = MASCOT_SVG;
+$("mascotJoin").innerHTML = MASCOT_IMG;
+$("mascotSprech").innerHTML = MASCOT_IMG;
 
 function greetingFor(name) {
   const n = name.toLowerCase();
