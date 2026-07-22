@@ -123,7 +123,8 @@
   .cell.done:not(.center) { background: var(--red-soft); }
   .bingo-count { margin-top: 12px; display: flex; align-items: center; gap: 12px; font-size: 13px; color: #6E6E68; text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; flex-wrap: wrap; }
   .stamp { font-family: 'Caveat', cursive; font-size: 26px; color: var(--red); font-weight: 700; transform: rotate(-4deg); border: 2px solid var(--red); padding: 0 10px; border-radius: 3px; }
-  .reset { background: none; border: none; font-family: inherit; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #6E6E68; text-decoration: underline; cursor: pointer; margin-left: auto; padding: 8px 4px; }
+  .reset { background: none; border: none; font-family: inherit; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #6E6E68; text-decoration: underline; cursor: pointer; padding: 8px 4px; }
+  #shuffleBtn { margin-left: auto; color: var(--red); }
 
   /* ——— Randnotizen ——— */
   .margin-notes { border-left: 2px solid var(--ink); display: flex; flex-direction: column; min-height: 0; }
@@ -187,6 +188,16 @@
         Blendwerk Widerstand zu leisten — mit Bleistift, Rotstift und tadelloser Handschrift.
       </div>
     </details>
+    <details class="vorwort">
+      <summary>Spielregeln</summary>
+      <div class="homage" style="font-style: normal;">
+        Die Karte begleitet dich durch den Büroalltag. Passiert eines der Ereignisse wirklich,
+        kreuz es an. Fünf in einer Reihe — waagrecht, senkrecht oder diagonal — sind ein
+        <b>Bingo</b>: laut verkünden, Randnotiz vom Pospischil kassieren und den Gewinn einlösen —
+        <b>eine Partie Wuzzeln gegen den Gattermeyer</b>. Der Ausgang ist bekannt; es geht ums
+        Dabeisein. Danach „Neu mischen“ und die nächste Runde spielen.
+      </div>
+    </details>
     <div class="mascot-wrap">
       <div id="mascotJoin"></div>
       <div class="bubble">Servas. Pospischil, Baumeister in Pension. Wer bist du, und was machst du auf meiner Baustelle?</div>
@@ -214,7 +225,8 @@
       <div class="bingo-count">
         <span id="countLabel">Angekreuzt: 1 / 25</span>
         <span class="stamp" id="stampLabel" style="display:none"></span>
-        <button class="reset" id="resetBtn">Karte zurücksetzen</button>
+        <button class="reset" id="shuffleBtn">Neu mischen</button>
+        <button class="reset" id="resetBtn">Zurücksetzen</button>
       </div>
     </div>
     <aside class="margin-notes">
@@ -235,8 +247,8 @@
 </div>
 
 <div class="hint">
-  Feld antippen, wenn's auf der Baustelle wirklich passiert. Die Mitte gilt immer — Naturgesetz.
-  Alles Gute zum 63er, Michael!
+  Ziel: fünf in einer Reihe. Der Gewinn: a Partie Wuzzeln gegen den Chef.
+  Die Mitte gilt immer — Naturgesetz. Alles Gute zum 63er, Michael!
 </div>
 
 <script>
@@ -270,6 +282,18 @@ const SQUARES_POOL = [
   "Praktikant:in rendert heimlich",
   "Die Fassade wird „optimiert“",
   "Wuzzler-Revanche wird gefordert",
+  "„Des hamma immer so gmacht“",
+  "Regen genau am Betoniertag",
+  "„Wer hat das freigegeben?“",
+  "Planstand veraltet — seit gestern",
+  "Aufzug zu klein für die Betten",
+  "Bauleitung flucht dreisprachig",
+  "Musterfassade gefällt niemandem",
+  "Jemand bringt Krapfen mit",
+  "Kabelsalat im Technikraum",
+  "Der Prüfstatiker will Nachweise",
+  "Baustellenbesichtigung im Anzug",
+  "Ausschreibung: drei Angebote, drei Welten",
 ];
 const CENTER_TEXT = "MICHAEL GEWINNT BEIM WUZZELN";
 const CENTER = 12;
@@ -348,6 +372,42 @@ const COMMENTS = {
   "Wuzzler-Revanche wird gefordert": [
     "Revanche gegen den Gattermeyer? Mutig. Aussichtslos, aber mutig.",
     "Nur zu. Der Tisch hat scho zwanzig Europäer kommen und weinen gsehn."],
+  "„Des hamma immer so gmacht“": [
+    "Der gefährlichste Satz am Bau. Gleich nach „des halt scho“.",
+    "Hamma immer so gmacht — und gnau drum schaut's a so aus."],
+  "Regen genau am Betoniertag": [
+    "Der Wettergott is Statiker. Anders kann i mir des net erklären.",
+    "Beton und Regen — a Melange, die kaner bstellt hat."],
+  "„Wer hat das freigegeben?“": [
+    "Die Frage hallt über jede Baustelle. Antwort kummt kane.",
+    "Freigegeben hat's kaner. Passiert is es trotzdem. A Wunder der Baukunst."],
+  "Planstand veraltet — seit gestern": [
+    "Der aktuelle Plan is immer der, den grad kaner hat.",
+    "Index R — wie Rätsel."],
+  "Aufzug zu klein für die Betten": [
+    "Im Spital muss ALLES durch die Tür passen. Alles. Immer. Frag net, woher i des waaß.",
+    "Des Bett muss liegend durch. Der's zeichnet hat, offenbar a."],
+  "Bauleitung flucht dreisprachig": [
+    "Fluchen is die einzige Sprache, die auf jeder Baustelle verstanden wird.",
+    "Dreisprachig? Anfänger. I hab an Polier kennt, der hat in fünf Sprachen gschimpft und sich in kaner entschuldigt."],
+  "Musterfassade gefällt niemandem": [
+    "Des Muster gfallt kanem — also wird's gebaut. Demokratie am Bau.",
+    "Zehn Leut, elf Meinungen, ane Fassade."],
+  "Jemand bringt Krapfen mit": [
+    "Krapfen auf der Baustelle — der wahre Terminplan-Beschleuniger.",
+    "Wer Krapfen bringt, kriegt sei Freigabe schneller. So war's, so is', so bleibt's."],
+  "Kabelsalat im Technikraum": [
+    "A Technikraum ohne Kabelsalat is wie a Heuriger ohne Lärm: theoretisch möglich.",
+    "Da drin hängt mehr Spaghetti als beim Italiener."],
+  "Der Prüfstatiker will Nachweise": [
+    "Der Prüfstatiker glaubt nix. Berufskrankheit. Und meistens hat er recht — sag's kanem.",
+    "Nachweise, Nachweise — als ob a Handschlag nimmer gilt."],
+  "Baustellenbesichtigung im Anzug": [
+    "Anzug am Bau — bis zur ersten Pfütze a schöner Anblick.",
+    "Wer im Anzug kummt, bleibt ka Stund. Merkts euch des."],
+  "Ausschreibung: drei Angebote, drei Welten": [
+    "Drei Angebote: ans zu teuer, ans zu billig, ans von an Neffen.",
+    "Wenn drei Angebote gleich san, is was faul. Wenn's verschieden san, a."],
 };
 const FALLBACK = ["Aha. No freilich.", "Hab i's net gsagt?", "Des schreib i mir auf. Mit Rotstift."];
 
@@ -442,15 +502,16 @@ function mulberry32(a) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-function cardForPlayer(name) {
-  const rand = mulberry32(seedFromName(name));
+function cardForPlayer(name, round) {
+  const rand = mulberry32(seedFromName(name + "#" + round));
   const pool = [...SQUARES_POOL];
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  pool.splice(CENTER, 0, CENTER_TEXT);
-  return pool;
+  const hand = pool.slice(0, 24);
+  hand.splice(CENTER, 0, CENTER_TEXT);
+  return hand;
 }
 function checkBingo(markedSet) {
   const lines = [];
@@ -465,7 +526,7 @@ const MARK_SVG = `<svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><pa
 const MARK_SVG_WHITE = MARK_SVG.replace('#C0362C', '#FAFAF6');
 
 // ——— State ———
-let player = null, card = [], marked = new Set([CENTER]), bingos = 0;
+let player = null, card = [], marked = new Set([CENTER]), bingos = 0, round = 1;
 
 // ——— DOM ———
 const $ = (id) => document.getElementById(id);
@@ -486,8 +547,9 @@ function addNote(square, text, isBingo) {
   div.className = "note" + (isBingo ? " bingo" : "");
   div.innerHTML = `<div class="ref">Betrifft: ${square}</div><div class="txt"></div>`;
   div.querySelector(".txt").textContent = text;
-  $("notesScroll").appendChild(div);
-  $("notesScroll").scrollTop = $("notesScroll").scrollHeight;
+  const scroll = $("notesScroll");
+  scroll.insertBefore(div, scroll.firstChild);
+  scroll.scrollTop = 0;
 }
 
 function burst(x, y, word, big) {
@@ -522,7 +584,7 @@ function renderGrid() {
 }
 
 function save() {
-  store.set(playerKey(player), JSON.stringify({ marked: [...marked], bingos }));
+  store.set(playerKey(player), JSON.stringify({ round, marked: [...marked], bingos }));
   store.set("bb63_last", player);
 }
 
@@ -545,7 +607,8 @@ function toggleSquare(i, e) {
   const cy = rect ? rect.top : innerHeight / 2;
   if (isNewBingo) {
     burst(cx - 60, cy, "TUSCH! BINGO!", true);
-    addNote(card[i], pick(BINGO_LINES), true);
+    const prize = bingos === 1 ? " Und jetzt ab zur Siegerehrung: a Partie Wuzzeln gegen den Gattermeyer. Der Ausgang is bekannt — es geht ums Dabeisein." : "";
+    addNote(card[i], pick(BINGO_LINES) + prize, true);
   } else {
     burst(cx - 20, cy, pick(BURST_WORDS), false);
     addNote(card[i], pick(COMMENTS[card[i]] || FALLBACK), false);
@@ -554,17 +617,19 @@ function toggleSquare(i, e) {
 
 function join(name) {
   player = name;
-  card = cardForPlayer(name);
+  round = 1;
   const saved = store.get(playerKey(name));
   if (saved) {
     try {
       const s = JSON.parse(saved);
+      round = s.round || 1;
       marked = new Set(s.marked); marked.add(CENTER);
       bingos = s.bingos || 0;
     } catch { marked = new Set([CENTER]); bingos = 0; }
   } else {
     marked = new Set([CENTER]); bingos = 0;
   }
+  card = cardForPlayer(name, round);
   save();
   $("metaName").textContent = name;
   $("joinScreen").style.display = "none";
@@ -582,10 +647,19 @@ $("joinBtn").addEventListener("click", () => {
 $("nameInput").addEventListener("keydown", (e) => { if (e.key === "Enter") $("joinBtn").click(); });
 
 $("resetBtn").addEventListener("click", () => {
-  if (!confirm("Karte wirklich zurücksetzen? Der Pospischil radiert nur ungern.")) return;
+  if (!confirm("Kreuzerl auf dieser Karte löschen? Der Pospischil radiert nur ungern.")) return;
   marked = new Set([CENTER]); bingos = 0;
   save(); renderGrid();
   addNote("Plankopf", "Alles ausradiert. A sauberes Blatt — des mag i.", false);
+});
+
+$("shuffleBtn").addEventListener("click", () => {
+  if (!confirm("Neue Karte mischen? Deine Kreuzerl auf dieser Karte verfallen.")) return;
+  round += 1;
+  marked = new Set([CENTER]); bingos = 0;
+  card = cardForPlayer(player, round);
+  save(); renderGrid();
+  addNote("Plankopf", "Neues Blatt, neue Mischung — Runde " + round + ". Die Mitte bleibt. Naturgesetze mischt ma net.", false);
 });
 
 // Tabs
